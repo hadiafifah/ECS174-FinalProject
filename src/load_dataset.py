@@ -1,50 +1,43 @@
+import torchvision
+import torchvision.transforms as transforms
 import kagglehub
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from torch.utils.data import DataLoader
 
 def load_dataset():
-
-    img_size=48
-    batch_size=32
+    batch_size = 64
     
     path = kagglehub.dataset_download("jonathanoheix/face-expression-recognition-dataset")
-
     print("Path to dataset files:", path)
-
-    train_dir = f"{path}/images/train"
-    val_dir = f"{path}/images/validation"
-
-    # data augmentation
-    train_datagen = ImageDataGenerator(
-        rescale=1/255.0,
-        rotation_range=15,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
-        horizontal_flip=True,
-        zoom_range=0.1
+    
+    transform = transforms.Compose([
+        transforms.Resize((48, 48)),
+        transforms.Grayscale(),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))
+    ])
+    
+    trainset = torchvision.datasets.ImageFolder(
+        root=f"{path}/images/train", 
+        transform=transform
     )
-
-    train_data = train_datagen.flow_from_directory(
-        train_dir,
-        target_size=(img_size, img_size),
-        color_mode="grayscale",
+    print("Train batches:", len(trainset))
+    trainloader = DataLoader(
+        trainset, 
         batch_size=batch_size,
-        class_mode="categorical",
-        shuffle=True
+        shuffle=True, 
+        num_workers=2
     )
-
-    val_data = train_datagen.flow_from_directory(
-        val_dir,
-        target_size=(img_size, img_size),
-        color_mode="grayscale",
+    
+    testset = torchvision.datasets.ImageFolder(
+        root=f"{path}/images/validation", 
+        transform=transform
+    )
+    print("Validation batches:", len(testset))
+    testloader = DataLoader(
+        testset, 
         batch_size=batch_size,
-        class_mode="categorical",
-        shuffle=False
+        shuffle=False, 
+        num_workers=2
     )
-
-    return train_data, val_data
-
-if __name__ == "__main__":
-    # test loading of dataset
-    train_data, val_data = load_dataset()
-    print("Train batches:", len(train_data))
-    print("Validation batches:", len(val_data))
+    
+    return trainloader, testloader
