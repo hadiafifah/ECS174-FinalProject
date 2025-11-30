@@ -1,5 +1,5 @@
 import cv2
-from src.model.predict_emotion import predict_emotion
+from model.predict_emotion import predict_emotion
 from realtime.webcam import get_features_from_webcam
 import mediapipe as mp
 
