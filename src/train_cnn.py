@@ -13,10 +13,10 @@ class Net(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
         self.dropout1 = nn.Dropout(0.25)
-        self.fc1 = nn.Linear(16 * 9 * 9, 256)
+        self.fc1 = nn.Linear(16 * 9 * 9, 120)
         self.dropout2 = nn.Dropout(0.5)
-        self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(128, 7)  # 7 emotion classes
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 7)  # 7 emotion classes
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))

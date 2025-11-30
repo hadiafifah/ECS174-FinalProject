@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import sys
 import os
+import numpy as np
 sys.path.append(os.path.dirname(__file__))
 from train_cnn import Net
 
@@ -15,7 +16,11 @@ EMOTION_LABELS = {
     6: 'surprise'
 }
 
-def predict_emotion(features, model_path='model.pth'):
+def predict_emotion(features, model_path='models/emotion_net.pth'):
+    if isinstance(features, np.ndarray):
+        features = torch.tensor(features, dtype=torch.float32)
+        features = features / 255.0 
+    
     model = Net()
     model.load_state_dict(torch.load(model_path, map_location='cpu')) # loads pre-trained weights from model file
     model.eval() # set model to evaluation mode
