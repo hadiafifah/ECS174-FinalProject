@@ -4,7 +4,7 @@ import kagglehub
 from torch.utils.data import DataLoader
 
 def load_dataset():
-    batch_size = 100
+    batch_size = 64
     
     path = kagglehub.dataset_download("jonathanoheix/face-expression-recognition-dataset")
     print("Path to dataset files:", path)
