@@ -79,7 +79,7 @@ def main():
         face_crop, bbox = get_face_crop(frame, face_detection)
 
         if face_crop is not None: #if face exists
-            emotion_dict = predict_emotion(face_crop, model_path="models/emotion_net.pth")
+            emotion_dict = predict_emotion(face_crop, model_path="../models/emotion_net.pth")
             if emotion_dict['confidence'] > 0.6:
                 display_emotion_on_screen(frame, bbox, emotion_dict)
 
