@@ -4,7 +4,7 @@ import kagglehub
 from torch.utils.data import DataLoader
 
 def load_dataset():
-    batch_size = 32
+    batch_size = 100
     
     path = kagglehub.dataset_download("jonathanoheix/face-expression-recognition-dataset")
     print("Path to dataset files:", path)
@@ -15,10 +15,21 @@ def load_dataset():
         transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,))
     ])
+
+    transform_train = transforms.Compose([
+        transforms.Resize((48, 48)),
+        transforms.Grayscale(),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomRotation(15),
+        transforms.RandomAffine(0, translate=(0.1, 0.1)),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,))
+    ])
+
     
     trainset = torchvision.datasets.ImageFolder(
         root=f"{path}/images/train", 
-        transform=transform
+        transform=transform_train
     )
     print("Train batches:", len(trainset))
 
