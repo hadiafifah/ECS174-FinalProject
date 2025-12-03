@@ -62,9 +62,6 @@ print(f"Validation accuracy: {val_acc:.4f}")
 print("\nClassification report (validation):")
 print(classification_report(y_val, y_val_pred, target_names=label_encoder.classes_))
 
-print("Confusion matrix (validation):")
-print(confusion_matrix(y_val, y_val_pred))
-
 model_path = os.path.join("..", "models", "emotion_model.joblib")
 encoder_path = os.path.join("..", "models", "label_encoder.joblib")
 
