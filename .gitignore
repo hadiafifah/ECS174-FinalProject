@@ -1,3 +1,5 @@
 v3/src/__pycache__
-v3/models
-v3/data
+v3/data/train_features.csv
+v3/data/val_features.csv
+v3/models/emotion_model.joblib
+v3/models/label_encoder.joblib
