@@ -18,4 +18,6 @@ Steps to run the program
     2. run "python emotion_model.py
     2. Now run "python webcam.py"
 
+----To close the window Press "esc" or "q" key----
+
 # doing these steps will bring up a camera window that shows the demo of the project
