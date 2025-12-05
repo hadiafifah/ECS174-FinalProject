@@ -4,3 +4,5 @@ opencv-python
 mediapipe
 scikit-learn
 kagglehub
+jupyter
+notebook
